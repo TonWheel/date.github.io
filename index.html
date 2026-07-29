@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>با من میای سر قرار؟</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #ffd1e8, #ffb6d9, #ff8fc7);
+    background-size: 400% 400%;
+    animation: gradientMove 8s ease infinite;
+    overflow: hidden;
+  }
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .heart {
+    position: fixed;
+    top: -10%;
+    color: #ff6fa5;
+    opacity: 0.7;
+    animation: fall linear infinite;
+    pointer-events: none;
+    user-select: none;
+  }
+  @keyframes fall {
+    to { transform: translateY(110vh) rotate(360deg); opacity: 0.2; }
+  }
+  .card {
+    background: #fff;
+    border-radius: 24px;
+    padding: 40px 30px;
+    width: 90%;
+    max-width: 380px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(255, 105, 180, 0.4);
+    position: relative;
+    z-index: 2;
+    animation: popIn 0.5s ease;
+  }
+  @keyframes popIn {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  h1 {
+    color: #d6336c;
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    line-height: 1.8;
+  }
+  .btn-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    min-height: 60px;
+  }
+  button {
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+  .yes-btn {
+    background: linear-gradient(135deg, #ff6fa5, #ff3d81);
+    color: #fff;
+    padding: 14px 28px;
+    font-size: 1.1rem;
+    box-shadow: 0 8px 20px rgba(255, 61, 129, 0.4);
+  }
+  .yes-btn:hover {
+    transform: scale(1.05);
+  }
+  .no-btn {
+    background: #b0b0b0;
+    color: #fff;
+    padding: 14px 28px;
+    font-size: 1.1rem;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+  }
+  .no-btn:hover {
+    background: #999;
+  }
+  .warning {
+    color: #d6336c;
+    margin-top: 16px;
+    font-size: 0.95rem;
+    min-height: 20px;
+    font-weight: bold;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 24px;
+    text-align: right;
+  }
+  label {
+    color: #d6336c;
+    font-weight: bold;
+    font-size: 0.95rem;
+  }
+  input[type="date"], input[type="time"] {
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 2px solid #ffb6d9;
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+    color: #333;
+  }
+  input[type="date"]:focus, input[type="time"]:focus {
+    border-color: #ff3d81;
+  }
+  .confirm-btn {
+    background: linear-gradient(135deg, #ff6fa5, #ff3d81);
+    color: #fff;
+    padding: 14px 32px;
+    font-size: 1.1rem;
+    width: 100%;
+    box-shadow: 0 8px 20px rgba(255, 61, 129, 0.4);
+  }
+  .confirm-btn:hover {
+    transform: scale(1.03);
+  }
+  .final-msg {
+    font-size: 1.6rem;
+    color: #d6336c;
+    font-weight: bold;
+    line-height: 2;
+  }
+  .final-sub {
+    color: #a04868;
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="card" id="mainCard">
+
+  <!-- مرحله ۱: درخواست قرار -->
+  <div id="stage1">
+    <h1>با من میای سر قرار؟🥹</h1>
+    <div class="btn-row">
+      <button class="yes-btn" id="yesBtn" onclick="sayYes()">بله میام</button>
+      <button class="no-btn" id="noBtn" onclick="sayNo()">نه نمیام</button>
+    </div>
+    <div class="warning" id="warningText"></div>
+  </div>
+
+  <!-- مرحله ۲: انتخاب ساعت و تاریخ -->
+  <div id="stage2" class="hidden">
+    <h1>پس ساعت و تاریخ رو بگو؟ 💕</h1>
+    <div class="form-group">
+      <label for="dateInput">تاریخ</label>
+      <input type="date" id="dateInput">
+      <label for="timeInput">ساعت</label>
+      <input type="time" id="timeInput">
+    </div>
+    <button class="confirm-btn" onclick="confirmDate()">تایید</button>
+    <div class="warning" id="dateWarning"></div>
+  </div>
+
+  <!-- مرحله ۳: پیام پایانی -->
+  <div id="stage3" class="hidden">
+    <div class="final-msg">پس میبینمتتتتت 🥰😍</div>
+    <div class="final-sub" id="finalDetails"></div>
+  </div>
+
+</div>
+
+<script>
+  // بارش قلب در پس‌زمینه
+  function createHearts() {
+    const symbols = ['❤️','💕','💖','💗','💓'];
+    setInterval(() => {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = (14 + Math.random() * 18) + 'px';
+      heart.style.animationDuration = (4 + Math.random() * 4) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 8000);
+    }, 400);
+  }
+  createHearts();
+
+  // جلوگیری از انتخاب تاریخ گذشته در خود تقویم
+  (function setMinDate() {
+    const dateInput = document.getElementById('dateInput');
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    dateInput.min = `${yyyy}-${mm}-${dd}`;
+  })();
+
+  let noClickCount = 0;
+  const noBtn = document.getElementById('noBtn');
+  const yesBtn = document.getElementById('yesBtn');
+  const warningText = document.getElementById('warningText');
+
+  function sayNo() {
+    noClickCount++;
+    warningText.textContent = 'اشتباه زدی دوباره تلاش کن';
+
+    if (noClickCount >= 3) {
+      noBtn.classList.add('hidden');
+    } else {
+      const scale = Math.max(1 - noClickCount * 0.3, 0.3);
+      noBtn.style.transform = `scale(${scale})`;
+      noBtn.style.fontSize = (1.1 - noClickCount * 0.25) + 'rem';
+      noBtn.style.padding = (14 - noClickCount * 4) + 'px ' + (28 - noClickCount * 8) + 'px';
+    }
+
+    const yesScale = 1 + noClickCount * 0.15;
+    yesBtn.style.transform = `scale(${yesScale})`;
+    yesBtn.style.fontSize = (1.1 + noClickCount * 0.15) + 'rem';
+  }
+
+  function sayYes() {
+    document.getElementById('stage1').classList.add('hidden');
+    document.getElementById('stage2').classList.remove('hidden');
+  }
+
+  function confirmDate() {
+    const date = document.getElementById('dateInput').value;
+    const time = document.getElementById('timeInput').value;
+    const dateWarning = document.getElementById('dateWarning');
+    dateWarning.textContent = '';
+
+    if (!date || !time) {
+      dateWarning.textContent = 'لطفاً تاریخ و ساعت رو انتخاب کن 🥹';
+      return;
+    }
+
+    const selected = new Date(date + 'T' + time);
+    const now = new Date();
+
+    if (selected < now) {
+      dateWarning.textContent = 'چطور با من قرار گذشته گذاشتی؟! 😂 من ماشین زمان ندارم، یه تاریخ از آینده انتخاب کن 🕰️💕';
+      return;
+    }
+
+    document.getElementById('stage2').classList.add('hidden');
+    document.getElementById('stage3').classList.remove('hidden');
+
+    const [year, month, day] = date.split('-');
+    document.getElementById('finalDetails').textContent =
+      `📅 ${day}/${month}/${year}   ⏰ ${time}`;
+  }
+</script>
+
+</body>
+</html>
