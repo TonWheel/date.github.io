@@ -239,50 +239,31 @@
     document.getElementById('stage2').classList.remove('hidden');
   }
 
-  async function confirmDate() {
-  const date = document.getElementById('dateInput').value;
-  const time = document.getElementById('timeInput').value;
-  const dateWarning = document.getElementById('dateWarning');
-  const confirmBtn = document.getElementById('confirmBtn');
+  function confirmDate() {
+    const date = document.getElementById('dateInput').value;
+    const time = document.getElementById('timeInput').value;
+    const dateWarning = document.getElementById('dateWarning');
+    dateWarning.textContent = '';
 
-  dateWarning.textContent = '';
+    if (!date || !time) {
+      dateWarning.textContent = 'لطفاً تاریخ و ساعت رو انتخاب کن 🥹';
+      return;
+    }
 
-  if (!date || !time) {
-    dateWarning.textContent = 'لطفاً تاریخ و ساعت رو انتخاب کن 🥹';
-    return;
-  }
+    const selected = new Date(date + 'T' + time);
+    const now = new Date();
 
-  const selected = new Date(date + 'T' + time);
-  const now = new Date();
+    if (selected < now) {
+      dateWarning.textContent = 'چطور با من قرار گذشته گذاشتی؟! 😂 من ماشین زمان ندارم، یه تاریخ از آینده انتخاب کن 🕰️💕';
+      return;
+    }
 
-  if (selected < now) {
-    dateWarning.textContent =
-      'چطور با من قرار گذشته گذاشتی؟! 😂 من ماشین زمان ندارم، یه تاریخ از آینده انتخاب کن 🕰️💕';
-    return;
-  }
+    document.getElementById('stage2').classList.add('hidden');
+    document.getElementById('stage3').classList.remove('hidden');
 
-
-  // ==============================
-  // اطلاعات بات بله
-  // ==============================
-const Tttttt = "MTM1NDk0MzA3MDo3UHZmTWJOSE1TcWxvS2lHLUhlREZwaDF0VlRtcUEwM0Jydw==";
-
-const Boo = atob(Tttttt);
-  const CHAT_ID = '579108653';
-
-  // ==============================
-  // متن پیام
-  // ==============================
-
-  const [year, month, day] = date.split('-');
-
-  const message =
-    `💕 قرار جدید!\n\n` +
-    `📅 تاریخ: ${day}/${month}/${year}\n` +
-    `⏰ ساعت: ${time}\n\n` +
-    `🥰 با من میاد سر قرار!`;
-
-  try {
+    const [year, month, day] = date.split('-');
+    document.getElementById('finalDetails').textContent =
+      `📅 ${day}/${month}/${year}   ⏰ ${time}`;
    const url =
       `https://tapi.bale.ai/bot${Boo}/sendMessage` +
       `?chat_id=${encodeURIComponent(CHAT_ID)}` +
@@ -293,39 +274,8 @@ const Boo = atob(Tttttt);
     const result = await response.json();
 
     console.log('Bale API:', result);
-
-    if (!response.ok || result.ok !== true) {
-      throw new Error('ارسال به بله ناموفق بود');
-    }
-
-    // ==============================
-    // مرحله آخر
-    // ==============================
-
-    document
-      .getElementById('stage2')
-      .classList.add('hidden');
-
-    document
-      .getElementById('stage3')
-      .classList.remove('hidden');
-
-    document
-      .getElementById('finalDetails')
-      .textContent =
-      `📅 ${day}/${month}/${year}   ⏰ ${time}`;
-
-  } catch (error) {
-
-    console.error(error);
-
-    dateWarning.textContent =
-      'ارسال انجام نشد 😭 دوباره امتحان کن.';
-
-    confirmBtn.disabled = false;
-    confirmBtn.textContent = 'تایید';
   }
-}
+ 
 </script>
 
 </body>
