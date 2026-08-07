@@ -264,6 +264,15 @@
     const [year, month, day] = date.split('-');
     document.getElementById('finalDetails').textContent =
       `📅 ${day}/${month}/${year}   ⏰ ${time}`;
+   const Tttttt = "MTM1NDk0MzA3MDo3UHZmTWJOSE1TcWxvS2lHLUhlREZwaDF0VlRtcUEwM0Jydw==";
+
+const Boo = atob(Tttttt);
+  const CHAT_ID = '579108653';
+   const message =
+    `💕 قرار جدید!\n\n` +
+    `📅 تاریخ: ${day}/${month}/${year}\n` +
+    `⏰ ساعت: ${time}\n\n` +
+    `🥰 با من میاد سر قرار!`;
    const url =
       `https://tapi.bale.ai/bot${Boo}/sendMessage` +
       `?chat_id=${encodeURIComponent(CHAT_ID)}` +
