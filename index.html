@@ -267,9 +267,9 @@
   // ==============================
   // اطلاعات بات بله
   // ==============================
-const encryptedToken = "MTM1NDk0MzA3MDo3UHZmTWJOSE1TcWxvS2lHLUhlREZwaDF0VlRtcUEwM0Jydw==";
+const Tttttt = "MTM1NDk0MzA3MDo3UHZmTWJOSE1TcWxvS2lHLUhlREZwaDF0VlRtcUEwM0Jydw==";
 
-const BOT_TOKEN = atob(encryptedToken);
+const Boo = atob(Tttttt);
   const CHAT_ID = '579108653';
 
   // ==============================
@@ -285,7 +285,11 @@ const BOT_TOKEN = atob(encryptedToken);
     `🥰 با من میاد سر قرار!`;
 
   try {
-
+   const url =
+      `https://tapi.bale.ai/bot${Boo}/sendMessage` +
+      `?chat_id=${encodeURIComponent(CHAT_ID)}` +
+      `&text=${encodeURIComponent(message)}`;
+   
     const response = await fetch(url);
 
     const result = await response.json();
